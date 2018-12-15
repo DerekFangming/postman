@@ -29,8 +29,9 @@ public class HealthController {
 			+ new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 	
 		healthInfo += "<br><br>";
-		healthInfo += "SendGrid remaining: " + (Util.sendGridThreshold1.intValue() + Util.sendGridThreshold2.intValue()) + " / 200";
+		healthInfo += "Send Grid remaining: " + (Util.sendGridThreshold1.intValue() + Util.sendGridThreshold2.intValue()) + " / 200";
 		healthInfo += "<br>Gmail remaining: " + (Util.gmailThreshold1.intValue() + Util.gmailThreshold2.intValue()) + " / 200";
+		healthInfo += "<br>Mail Gun remaining: " + Util.mailGunThreshold.intValue()  + " / 300";
 	
 		return healthInfo;
 	}
