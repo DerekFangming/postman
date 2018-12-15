@@ -16,6 +16,7 @@ import com.fmning.postman.service.GmailSender;
 import com.fmning.postman.service.LocalSender;
 import com.fmning.postman.service.MailDeliveryException;
 import com.fmning.postman.service.MailFormatException;
+import com.fmning.postman.service.MailGunSender;
 import com.fmning.postman.service.MailSender;
 import com.fmning.postman.service.SendGridSender;
 import com.fmning.postman.util.Util;
@@ -72,6 +73,8 @@ public class EmailController {
 					sender = new GmailSender();
 				} else if (email.getEmailSenderType() == EmailSenderType.SEND_GRID) {
 					sender = new SendGridSender();
+				} else if (email.getEmailSenderType() == EmailSenderType.MAIL_GUN) {
+					sender = new MailGunSender();
 				}
 			}catch (MailDeliveryException e) {
 				sender = new LocalSender();
