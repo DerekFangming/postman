@@ -1,5 +1,8 @@
 package com.fmning.postman.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collections;
 
 import com.fmning.postman.model.Email;
@@ -10,8 +13,8 @@ import sendinblue.ApiException;
 import sendinblue.Configuration;
 import sendinblue.auth.ApiKeyAuth;
 import sibApi.SmtpApi;
-import sibModel.CreateSmtpEmail;
 import sibModel.SendSmtpEmail;
+import sibModel.SendSmtpEmailAttachment;
 import sibModel.SendSmtpEmailReplyTo;
 import sibModel.SendSmtpEmailSender;
 import sibModel.SendSmtpEmailTo;
@@ -36,18 +39,33 @@ public class SendInBlueSender implements MailSender {
 		SmtpApi apiInstance = new SmtpApi();
 		
 		SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
-		sendSmtpEmail.setSender(new SendSmtpEmailSender().email("fning@fmning.com"));
-		sendSmtpEmail.setTo(Collections.singletonList(new SendSmtpEmailTo().email("synfm123@gmail.com")));
-		sendSmtpEmail.setSubject("from send in blue!");
-		sendSmtpEmail.setTextContent("test content!");
-		sendSmtpEmail.setReplyTo(new SendSmtpEmailReplyTo().email("fning@fmning.com"));
+		sendSmtpEmail.setSender(new SendSmtpEmailSender().email(email.getFrom()));
+		sendSmtpEmail.setReplyTo(new SendSmtpEmailReplyTo().email(email.getFrom()));
+		sendSmtpEmail.setTo(Collections.singletonList(new SendSmtpEmailTo().email(email.getTo())));
+		sendSmtpEmail.setSubject(email.getSubject());
+		
+		//Check for HTML content
+		if (email.isHtml()) {
+			sendSmtpEmail.setHtmlContent(email.getContent());
+		} else {
+			sendSmtpEmail.setTextContent(email.getContent());
+		}
+		
+		//Check and add attachment
+		if (email.getAttachmentName() != null && email.getAttachmentPath() != null) {
+			File attachment = new File(email.getAttachmentPath());
+			try {
+				sendSmtpEmail.setAttachment(Collections.singletonList(new SendSmtpEmailAttachment().name(email.getAttachmentName()).content(Files.readAllBytes(attachment.toPath()))));
+			} catch (IOException e) {
+				throw new MailDeliveryException("Attachment is not readable.");
+			}
+		}
+		
 		
 		try {
-			CreateSmtpEmail result = apiInstance.sendTransacEmail(sendSmtpEmail);
-			System.out.println(result);
+			apiInstance.sendTransacEmail(sendSmtpEmail);
 		} catch (ApiException e) {
-			System.err.println("Exception when calling SmtpApi#sendTransacEmail");
-			e.printStackTrace();
+			throw new MailDeliveryException(e.getMessage());
 		}
 		
 	}
