@@ -24,6 +24,10 @@ public class Scheduler {
 		Util.sendGridWarningSend = false;
 		Util.sendGridErrorSend = false;
 		
+		Util.sendInBlueThreshold.set(300);
+		Util.sendInBlueWarningSend = false;
+		Util.sendInBlueErrorSend = false;
+		
 		Util.mailGunThreshold.set(300);
 		Util.mailGunWarningSend = false;
 		Util.mailGunErrorSend = false;
@@ -47,6 +51,14 @@ public class Scheduler {
 		} else if (sendGridRemaining < 100 && !Util.sendGridWarningSend) {
 			Util.sendGridWarningSend = true;
 			Util.notification(new Notification("Warning. Send Grid remaining balance is " + sendGridRemaining));
+		}
+		
+		if (Util.sendInBlueThreshold.intValue() < 20 && !Util.sendInBlueErrorSend) {
+			Util.sendInBlueErrorSend = true;
+			Util.notification(new Notification("Fatal warning. Send in blue remailning balance is " + Util.sendInBlueThreshold.intValue()));
+		} else if (Util.sendInBlueThreshold.intValue() < 150 && !Util.sendInBlueWarningSend) {
+			Util.sendInBlueWarningSend = true;
+			Util.notification(new Notification("Warning. Send in blue remailning balance is " + Util.sendInBlueThreshold.intValue()));
 		}
 		
 		if (Util.mailGunThreshold.intValue() < 0 && !Util.mailGunErrorSend) {

@@ -19,6 +19,7 @@ import com.fmning.postman.service.MailFormatException;
 import com.fmning.postman.service.MailGunSender;
 import com.fmning.postman.service.MailSender;
 import com.fmning.postman.service.SendGridSender;
+import com.fmning.postman.service.SendInBlueSender;
 import com.fmning.postman.util.Util;
 
 @RestController
@@ -75,6 +76,10 @@ public class EmailController {
 					sender = new SendGridSender();
 				} else if (email.getEmailSenderType() == EmailSenderType.MAIL_GUN) {
 					sender = new MailGunSender();
+				} else if (email.getEmailSenderType() == EmailSenderType.SEND_IN_BLUE) {
+					sender = new SendInBlueSender();
+				} else {
+					sender = new LocalSender();
 				}
 			}catch (MailDeliveryException e) {
 				sender = new LocalSender();

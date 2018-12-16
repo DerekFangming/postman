@@ -25,6 +25,9 @@ public class Initializer {
 	@Value("${sendGridApiKey2}")
 	private String sendGridApiKey2;
 	
+	@Value("${sendInBlueApiKey}")
+	private String sendInBlueApiKey;
+	
 	@Value("${mailGunApiKey}")
 	private String mailGunApiKey;
 	
@@ -36,6 +39,8 @@ public class Initializer {
 		
 		Util.sendGridApiKey1 = sendGridApiKey1;
 		Util.sendGridApiKey2 = sendGridApiKey2;
+		
+		Util.sendInBlueApiKey = sendInBlueApiKey;
 		
 		Util.mailGunApiKey = mailGunApiKey;
 	}

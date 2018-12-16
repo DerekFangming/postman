@@ -33,6 +33,12 @@ public class Util {
 	public static boolean sendGridWarningSend = false;
 	public static boolean sendGridErrorSend = false;
 	
+	//Send in blue
+	public static AtomicInteger sendInBlueThreshold = new AtomicInteger(300);
+	public static String sendInBlueApiKey = "";
+	public static boolean sendInBlueWarningSend = false;
+	public static boolean sendInBlueErrorSend = false;
+	
 	//Mail gun
 	public static AtomicInteger mailGunThreshold = new AtomicInteger(300);
 	public static String mailGunApiKey = "";

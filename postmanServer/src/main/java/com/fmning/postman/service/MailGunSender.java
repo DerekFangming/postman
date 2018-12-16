@@ -14,7 +14,13 @@ import net.sargue.mailgun.Response.ResponseType;
 
 public class MailGunSender implements MailSender {
 	
-	public MailGunSender () {}
+	public MailGunSender () {
+		if (Util.mailGunThreshold.intValue() > -300) {
+			Util.mailGunThreshold.decrementAndGet();
+		} else {
+			throw new MailDeliveryException("Mail gun reaches threshold. Cannot send any more.");
+		}
+	}
 
 	@Override
 	public void sendEmail(Email email) throws MailDeliveryException {
