@@ -99,7 +99,7 @@ public class Util {
 			notification.setSubject("Empty Message");
 		}
 		LocalSender localSender = new LocalSender();
-		localSender.sendEmail(new Email("admin@fmning.com", "synfm123@gmail.com", notification.getSubject(), notification.getContent()));
+		localSender.sendEmail(new Email("admin@fmning.com", "synfm@126.com", notification.getSubject(), notification.getContent()));
 	}
 
 }
