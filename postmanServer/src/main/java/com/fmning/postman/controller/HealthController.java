@@ -31,6 +31,7 @@ public class HealthController {
 		healthInfo += "<br><br>";
 		healthInfo += "Send Grid remaining: " + (Util.sendGridThreshold1.intValue() + Util.sendGridThreshold2.intValue()) + " / 200";
 		healthInfo += "<br>Gmail remaining: " + (Util.gmailThreshold1.intValue() + Util.gmailThreshold2.intValue()) + " / 200";
+		healthInfo += "<br>Send In Blue remaining: " + Util.sendInBlueThreshold.intValue()  + " / 300";
 		healthInfo += "<br>Mail Gun remaining: " + Util.mailGunThreshold.intValue()  + " / 300";
 	
 		return healthInfo;
